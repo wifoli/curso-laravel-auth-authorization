@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\{
+    ResourceController,
     UserController,
 };
 use App\Http\Controllers\Api\Auth\{
@@ -22,6 +23,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/users/{user}', [UserController::class, 'show']);
     Route::put('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
+
+    // Resources routes
+    Route::get('/resources', [ResourceController::class, 'index']);
 });
 
 Route::get('/', function () {
