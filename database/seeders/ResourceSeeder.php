@@ -30,5 +30,11 @@ class ResourceSeeder extends Seeder
             ['name' => 'deletar_empresa'],
             ['name' => 'editar_empresa'],
         ]);
+
+        $admin = Resource::create(['name' => 'Admins']);
+        $admin->permissions()->createMany([
+            ['name' => 'users'],
+            ['name' => 'add_permission_users'],
+        ]);
     }
 }

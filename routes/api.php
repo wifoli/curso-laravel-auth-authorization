@@ -21,6 +21,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Permissions of user routes
     Route::get('/users/can/{permission}', [PermisionUserController::class, 'userHasPermission']);
     Route::post('/users/permissions', [PermisionUserController::class, 'addPermissionUser']);
+    Route::delete('/users/permissions', [PermisionUserController::class, 'removePermissionUser']);
     Route::get('/users/{identify}/permissions', [PermisionUserController::class, 'permissionsUser']);
 
     // Users routes

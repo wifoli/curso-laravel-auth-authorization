@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PermisionUserController extends Controller
 {
@@ -27,12 +28,36 @@ class PermisionUserController extends Controller
 
     public function addPermissionUser(Request $request)
     {
+        if (Gate::denies('add_permission_users')) {
+            return response()->json([
+                'error' => 'Você não tem permissão para adicionar permissões.',
+            ], 403);
+        }
+
         $user = $this->user->where('uuid', $request->user)->firstOrFail();
 
         $user->permissions()->attach($request->permissions);
 
         return response()->json([
             'message' => 'Permission added successfully',
+        ], 200);
+    }
+
+    public function removePermissionUser(Request $request)
+    {
+        if (Gate::denies('add_permission_users')) {
+            return response()->json([
+                'error' => 'Você não tem permissão para adicionar permissões.',
+            ], 403);
+        }
+
+        $user = $this->user->where('uuid', $request->user)->firstOrFail();
+
+        if ($request->permissions)
+            $user->permissions()->detach($request->permissions);
+
+        return response()->json([
+            'message' => 'Permission removed successfully',
         ], 200);
     }
 
