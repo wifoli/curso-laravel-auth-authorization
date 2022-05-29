@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    public function hasPermission(string $permission): bool
+    {
+        return $this->permissions->contains('name', $permission);
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return in_array($this->email, config('acl.admins'));
+    }
 }

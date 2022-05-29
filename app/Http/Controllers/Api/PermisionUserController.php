@@ -35,4 +35,18 @@ class PermisionUserController extends Controller
             'message' => 'Permission added successfully',
         ], 200);
     }
+
+    public function userHasPermission(Request $request, $permission)
+    {
+        $user = $request->user();
+
+        if (!$user->isSuperAdmin() && !$user->hasPermission($permission))
+            return response()->json([
+                'message' => 'User does not have permission',
+            ], 403);
+
+        return response()->json([
+            'message' => 'User has permission',
+        ], 200);
+    }
 }
